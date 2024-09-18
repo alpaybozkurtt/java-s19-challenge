@@ -39,7 +39,7 @@ public class ProductController {
 
     @GetMapping("/top-liked")
     public ResponseEntity<List<Product>> getTopLikedProducts() {
-        List<Product> products = productService.getTopLikedProducts(); // En çok beğenilen ürünleri getir
+        List<Product> products = productService.getTopLikedProducts();
         return ResponseEntity.ok(products);
     }
 

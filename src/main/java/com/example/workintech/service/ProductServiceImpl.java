@@ -37,7 +37,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> getTopLikedProducts() {
-        return productRepository.findAllOrderByLikesDesc(); // En çok beğenilen ürünleri getir
+        return productRepository.findAllOrderByLikesDesc();
     }
 
     @Override

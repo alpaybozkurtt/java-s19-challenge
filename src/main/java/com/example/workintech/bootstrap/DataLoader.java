@@ -27,7 +27,6 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        // Örnek Kategoriler
         Category category1 = new Category(null, "Elektronik", null);
         Category category2 = new Category(null, "Ev Eşyaları", null);
         Category category3 = new Category(null, "Müzik Aletleri", null);
@@ -42,7 +41,6 @@ public class DataLoader implements CommandLineRunner {
         categoryRepository.save(category5);
         categoryRepository.save(category6);
 
-        // Örnek Kullanıcılar
         User user1 = new User(null, "user1@example.com", "User One", "hashedpassword1", CUSTOMER);
         User user2 = new User(null, "user2@example.com", "User Two", "hashedpassword2", CUSTOMER);
         User admin = new User(null, "admin@example.com", "Admin User", "hashedpassword3", ADMIN);
@@ -51,7 +49,6 @@ public class DataLoader implements CommandLineRunner {
         userRepository.save(user2);
         userRepository.save(admin);
 
-        // Örnek Ürünler (Her kategori için 5 ürün)
         Product product1 = new Product(null, "Laptop", "High-performance laptop", 1500.00, 10, category1, true, 0, 100);
         Product product2 = new Product(null, "Akıllı Telefon", "Son model akıllı telefon", 1000.00, 15, category1, false, 0, 200);
         Product product3 = new Product(null, "Tablet", "Taşınabilir tablet", 600.00, 8, category1, true, 0, 80);
@@ -120,3 +117,44 @@ public class DataLoader implements CommandLineRunner {
         productRepository.save(product30);
     }
 }
+
+
+/* AXIOS ILE BACKEND'E FAVORI URUNLER ICIN GET REQUESTI ORNEGI
+
+ import React, { useEffect, useState } from 'react';
+ import axios from 'axios';
+
+const TopLikedProducts = () => {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchTopLikedProducts = async () => {
+      try {
+        const response = await axios.get('http://localhost:9000/project/api/products/top-liked');
+        setProducts(response.data);
+      } catch (error) {
+        console.error('Favori Ürünler Listelenemedi:', error);
+      }
+    };
+
+    fetchTopLikedProducts();
+  }, []);
+
+  return (
+    <div>
+      <h2>Top Liked Products</h2>
+      <ul>
+        {products.map((product) => (
+          <li key={product.id}>
+            <h3>{product.name}</h3>
+            <p>{product.description}</p>
+            <p>Likes: {product.likes}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default TopLikedProducts;
+*/

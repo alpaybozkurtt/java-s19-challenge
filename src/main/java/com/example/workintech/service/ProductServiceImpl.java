@@ -1,8 +1,8 @@
 package com.example.workintech.service;
 
 import com.example.workintech.entity.Product;
+import com.example.workintech.exceptions.ProductNotFoundException;
 import com.example.workintech.repository.ProductRepository;
-import com.example.workintech.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,13 +21,16 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product saveProduct(Product product) {
+        if (product.getPrice() < 0) {
+            throw new IllegalArgumentException("Price cannot be negative");
+        }
         return productRepository.save(product);
     }
 
     @Override
     public Product getProductById(Long id) {
-        Optional<Product> product = productRepository.findById(id);
-        return product.orElse(null);
+        return productRepository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException("Product with id " + id + " not found"));
     }
 
     @Override
@@ -42,6 +45,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void deleteProduct(Long id) {
-        productRepository.deleteById(id);
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException("Product with id " + id + " not found"));
+        productRepository.delete(product);
     }
 }

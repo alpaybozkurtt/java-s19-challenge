@@ -47,3 +47,20 @@ public class Product {
     @Min(value = 0, message = "Likes cannot be negative")
     private Integer likes;
 }
+
+
+Map<Integer, Integer> freqCount = new HashMap<>();
+        for (int item : items) {
+        freqCount.put(item, freqCount.getOrDefault(item, 0) + 1);
+        }
+
+        items.sort((a, b) -> {
+int freqCheck = freqCount.get(a).compareTo(freqCount.get(b));
+            if (freqCheck != 0) {
+        return freqCheck;
+            } else {
+                    return Integer.compare(a, b);
+            }
+                    });
+
+                    return items;
